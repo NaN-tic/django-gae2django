@@ -1,7 +1,7 @@
 default:
 	@echo "Run 'make all' to fetch required sources to run this example."
 
-all: static templates codereview feeds
+all: static templates codereview feeds login
 	@echo
 	@echo "Remember to copy the 'gae2django' directory from the main source where you have taken this rietveld directory to here."
 	@echo "Configure the database and other django things in the settings.py file."
@@ -43,3 +43,6 @@ templates: rietveld.hg
 
 feeds: codereview templates
 	patch -p1 < patches/feeds.diff
+
+login: codereview
+	patch -p1 < patches/login_required.diff
