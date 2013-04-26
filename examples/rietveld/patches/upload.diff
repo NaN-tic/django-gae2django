@@ -1,6 +1,7 @@
---- rietveld.hg/upload.py	2012-02-22 18:50:42.877304344 +0100
-+++ upload.py	2012-02-22 18:54:14.086351677 +0100
-@@ -289,7 +289,7 @@
+diff -r a2d5c409a0ee upload.py
+--- rietveld.hg/upload.py	Wed Feb 13 13:29:29 2013 -0500
++++ upload.py	Fri Apr 26 18:10:30 2013 +0200
+@@ -297,7 +297,7 @@
                                response.headers, response.fp)
      self.authenticated = True
  
@@ -9,7 +10,7 @@
      """Authenticates the user.
  
      The authentication process works as follows:
-@@ -371,8 +371,10 @@
+@@ -379,8 +379,10 @@
      """
      # TODO: Don't require authentication.  Let the server say
      # whether it is necessary.
@@ -22,7 +23,7 @@
  
      old_timeout = socket.getdefaulttimeout()
      socket.setdefaulttimeout(timeout)
-@@ -415,9 +417,42 @@
+@@ -423,9 +425,42 @@
  class HttpRpcServer(AbstractRpcServer):
    """Provides a simplified RPC-style interface for HTTP requests."""
  
@@ -67,9 +68,9 @@
      if self.save_cookies:
        StatusUpdate("Saving authentication cookies to %s" % self.cookie_file)
        self.cookie_jar.save()
-@@ -618,23 +653,7 @@
- 
-   rpc_server_class = HttpRpcServer
+@@ -670,23 +705,7 @@
+     A new HttpRpcServer, on which RPC calls can be made.
+   """
  
 -  # If this is the dev_appserver, use fake authentication.
    host = (host_override or server).lower()
@@ -77,7 +78,7 @@
 -    if email is None:
 -      email = "test@example.com"
 -      logging.info("Using debug user %s.  Override with --email" % email)
--    server = rpc_server_class(
+-    server = HttpRpcServer(
 -        server,
 -        lambda: (email, "password"),
 -        host_override=host_override,
@@ -89,5 +90,5 @@
 -    server.authenticated = True
 -    return server
  
-   def GetUserCredentials():
-     """Prompts the user for a username and password."""
+   return HttpRpcServer(server,
+                        KeyringCreds(server, host, email).GetUserCredentials,

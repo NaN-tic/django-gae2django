@@ -13,12 +13,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'    # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'dev.db'       # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'dev.db',                       # Or path to database file if using sqlite3.
+        'USER': '',                             # Not used with sqlite3.
+        'PASSWORD': '',                         # Not used with sqlite3.
+        'HOST': '',                             # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                             # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -46,6 +50,10 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/static/'
 
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/djangostatic/'
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -56,9 +64,9 @@ SECRET_KEY = 'el@4s$*(idwm5-87teftxlksckmy8$tyo7(tm!n-5x)zeuheex'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
 )
 
 
@@ -70,11 +78,12 @@ MIDDLEWARE_CLASSES = (
     # Keep in mind, that CSRF protection is DISABLED in this example!
     'rietveld_helper.middleware.DisableCSRFMiddleware',
     'rietveld_helper.middleware.AddUserToRequestMiddleware',
+    'codereview.middleware.AddHSTSHeaderMiddleware',
     'django.middleware.doc.XViewMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',    # required by admin panel
+    'django.contrib.auth.context_processors.auth',    # required by admin panel
     'django.core.context_processors.request',
 )
 
@@ -90,6 +99,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.staticfiles',
     'gae2django',
     'rietveld_helper',
     'codereview',
@@ -101,6 +111,13 @@ LOGIN_REDIRECT_URL = '/'
 # This won't work with gae2django.
 RIETVELD_INCOMING_MAIL_ADDRESS = None
 
-RIETVELD_REVISION = ''
+RIETVELD_REVISION = 'a2d5c409a0ee'
+
+# Default values for patch rendering
+DEFAULT_CONTEXT = 10
+DEFAULT_COLUMN_WIDTH = 80
+MIN_COLUMN_WIDTH = 3
+MAX_COLUMN_WIDTH = 2000
+HSTS_MAX_AGE = 60*60*24*365  # 1 year in seconds.
 
 UPLOAD_PY_SOURCE = os.path.join(os.path.dirname(__file__), 'upload.py')

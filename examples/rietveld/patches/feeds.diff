@@ -1,0 +1,78 @@
+diff -r a2d5c409a0ee codereview/feeds.py
+--- a/codereview/feeds.py	Wed Feb 13 13:29:29 2013 -0500
++++ b/codereview/feeds.py	Fri Apr 26 18:09:03 2013 +0200
+@@ -14,7 +14,7 @@
+ 
+ import md5
+ 
+-from django.contrib.syndication.feeds import Feed
++from django.contrib.syndication.views import Feed
+ from django.core.exceptions import ObjectDoesNotExist
+ from django.core.urlresolvers import reverse
+ from django.utils.feedgenerator import Atom1Feed
+diff -r a2d5c409a0ee codereview/urls.py
+--- a/codereview/urls.py	Wed Feb 13 13:29:29 2013 -0500
++++ b/codereview/urls.py	Fri Apr 26 18:09:03 2013 +0200
+@@ -97,6 +97,6 @@
+ 
+ urlpatterns += patterns(
+     '',
+-    (r'^rss/(?P<url>.*)$', 'django.contrib.syndication.views.feed',
++    (r'^rss/(?P<url>.*)$', 'django.contrib.syndication.views.Feed',
+      {'feed_dict': feed_dict}),
+     )
+diff -r a2d5c409a0ee templates/base.html
+--- a/templates/base.html	Wed Feb 13 13:29:29 2013 -0500
++++ b/templates/base.html	Fri Apr 26 18:09:03 2013 +0200
+@@ -20,22 +20,22 @@
+   <script type="text/javascript" src="{{media_url}}script.js"></script>
+   <link rel="alternate" type="application/atom+xml"
+    	title="Recent Issues"
+-   	href="{%url django.contrib.syndication.views.feed url="all"%}" />
++   	href="{%url django.contrib.syndication.views.Feed url="all"%}" />
+    {%if user%}
+      <link rel="alternate" type="application/atom+xml"
+    	  title="Issues created by me"
+-   	  href="{%url django.contrib.syndication.views.feed url="mine"%}/{%nickname user True%}" />
++   	  href="{%url django.contrib.syndication.views.Feed url="mine"%}/{%nickname user True%}" />
+      <link rel="alternate" type="application/atom+xml"
+    	  title="Issues reviewable by me" 
+-   	  href="{%url django.contrib.syndication.views.feed url="reviews"%}/{%nickname user True%}" />
++   	  href="{%url django.contrib.syndication.views.Feed url="reviews"%}/{%nickname user True%}" />
+      <link rel="alternate" type="application/atom+xml"
+    	  title="Issues closed by me"
+-   	  href="{%url django.contrib.syndication.views.feed url="closed"%}/{%nickname user True%}" />
++   	  href="{%url django.contrib.syndication.views.Feed url="closed"%}/{%nickname user True%}" />
+    {%endif%}
+    {%if issue%}
+      <link rel="alternate" type="application/atom+xml"
+  	    title="Issue {{issue.key.id}}"
+- 	    href="{%url django.contrib.syndication.views.feed url="issue"%}/{{issue.key.id}}" />
++ 	    href="{%url django.contrib.syndication.views.Feed url="issue"%}/{{issue.key.id}}" />
+    {%endif%}
+ 
+    <!-- head block to insert js/css for forms processing -->
+@@ -240,18 +244,18 @@
+   <div style="height:14px;">
+   <img src="{{media_url}}rss.gif" alt="RSS Feeds" width="14" height="14"
+        align="top" />
+-  <a href="{%url django.contrib.syndication.views.feed url="all"%}">Recent Issues</a>
++  <a href="{%url django.contrib.syndication.views.Feed url="all"%}">Recent Issues</a>
+   {%if user%}
+   |
+-  <a href="{%url django.contrib.syndication.views.feed url="mine"%}/{%nickname user True%}">My Issues</a>
++  <a href="{%url django.contrib.syndication.views.Feed url="mine"%}/{%nickname user True%}">My Issues</a>
+   |
+-  <a href="{%url django.contrib.syndication.views.feed url="reviews"%}/{%nickname user True%}">My Reviews</a>
++  <a href="{%url django.contrib.syndication.views.Feed url="reviews"%}/{%nickname user True%}">My Reviews</a>
+   |
+-  <a href="{%url django.contrib.syndication.views.feed url="closed"%}/{%nickname user True%}">My Closed</a>
++  <a href="{%url django.contrib.syndication.views.Feed url="closed"%}/{%nickname user True%}">My Closed</a>
+   {%endif%}
+   {%if issue%}
+   |
+-  <a href="{%url django.contrib.syndication.views.feed url="issue"%}/{{issue.key.id}}">This issue</a>
++  <a href="{%url django.contrib.syndication.views.Feed url="issue"%}/{{issue.key.id}}">This issue</a>
+   {%endif%}
+   </div>
+   <div style="margin-top: .3em;">This is Rietveld <a href='http://code.google.com/p/rietveld/source/list'>{{rietveld_revision}}</a></div>

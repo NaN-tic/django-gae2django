@@ -1,9 +1,11 @@
-RIETVELDREV=32c87e882d9b
-
 default:
 	@echo "Run 'make all' to fetch required sources to run this example."
 
-all: static templates codereview gae2django dev.db
+all: static templates codereview
+	@echo
+	@echo "Remember to copy the 'gae2django' directory from the main source where you have taken this rietveld directory to here."
+	@echo "Configure the database and other django things in the settings.py file."
+	@echo "Run './manage.py syncdb' to config Rietveld."
 	@echo "Run './manage.py runserver' to run Rietveld."
 
 clean: clean_local clean_external
@@ -19,16 +21,10 @@ clean_rietveld:
 
 clean_local:
 	@if [ -x gae2django ]; then unlink gae2django; fi;
-	@rm -f dev.db
-
-gae2django:
-	ln -s ../../gae2django .
-
-dev.db:
-	./manage.py syncdb
+	@if [ -x dev.db ]; rm -f dev.db; fi;
 
 rietveld.hg:
-	hg clone -u $(RIETVELDREV) http://code.google.com/p/rietveld rietveld.hg
+    hg clone -u https://bitbucket.org/nantic/rietveld rietveld.hg
 
 codereview: rietveld.hg
 	ln -s rietveld.hg/codereview .
