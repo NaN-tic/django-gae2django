@@ -24,7 +24,7 @@ clean_local:
 	@if [ -x dev.db ]; rm -f dev.db; fi;
 
 rietveld.hg:
-    hg clone -u https://bitbucket.org/nantic/rietveld rietveld.hg
+	hg clone https://bitbucket.org/nantic/rietveld rietveld.hg
 
 codereview: rietveld.hg
 	ln -s rietveld.hg/codereview .
