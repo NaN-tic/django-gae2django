@@ -1,0 +1,16 @@
+diff -r ee6a3546f960 codereview/views.py
+--- a/codereview/views.py	Fri Apr 26 19:15:43 2013 +0200
++++ b/codereview/views.py	Sun Apr 28 22:34:24 2013 +0200
+@@ -3626,10 +3627,10 @@
+   if bad_branches:
+     db.delete(bad_branches)
+   repo_map = {}
+-  for repo in models.Repository.all().fetch(1000, batch_size=100):
++  for repo in models.Repository.all().fetch(1000):
+     repo_map[str(repo.key())] = repo
+   branches = []
+-  for branch in models.Branch.all().fetch(2000, batch_size=100):
++  for branch in models.Branch.all().fetch(2000):
+     # Using ._repo instead of .repo returns the db.Key of the referenced entity.
+     # Access to a protected member FOO of a client class
+     # pylint: disable=W0212
