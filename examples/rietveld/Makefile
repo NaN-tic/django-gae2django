@@ -1,7 +1,7 @@
 default:
 	@echo "Run 'make all' to fetch required sources to run this example."
 
-all: static templates codereview feeds login views
+all: templates static codereview feeds login views
 	@echo
 	@echo "Remember to copy the 'gae2django' directory from the main source where you have taken this rietveld directory to here."
 	@echo "Configure the database and other django things in the settings.py file."
@@ -30,16 +30,20 @@ codereview: rietveld.hg
 	ln -s rietveld.hg/codereview .
 	patch -p1 < patches/download.link.diff
 
-static: rietveld.hg upload.py
+static: upload.py
 	ln -s rietveld.hg/static .
-
-upload.py: rietveld.hg
-	ln -s rietveld.hg/upload.py .
-	patch -p0 < patches/upload.diff
+	@if [ -f django-120x30.gif ]; then mv django-120x30.gif static; fi;
+	@if [ -f python-120x30.gif ]; then mv python-120x30.gif static; fi;
+	patch -p1 < patches/template_base.diff
 
 templates: rietveld.hg
 	ln -s rietveld.hg/templates .
 	patch -p1 < patches/account-login-links.diff
+
+upload.py: templates
+	ln -s rietveld.hg/upload.py .
+	patch -p0 < patches/upload.diff
+	patch -p1 < patches/upload_html.diff
 
 feeds: codereview templates
 	patch -p1 < patches/feeds.diff

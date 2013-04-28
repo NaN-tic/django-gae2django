@@ -1,0 +1,16 @@
+diff -r ee6a3546f960 templates/base.html
+--- a/templates/base.html	Fri Apr 26 19:15:43 2013 +0200
++++ b/templates/base.html	Sun Apr 28 23:13:51 2013 +0200
+@@ -231,6 +234,12 @@
+ 
+ <p></p>
+ <div style="float: left;">
++  <a target="_blank" href="http://python.org"><img border="0"
++   src="{{media_url}}python-120x30.gif"
++   alt="Powered by Python" /></a>
++  <a target="_blank" href="https://www.djangoproject.com/"><img border="0"
++   src="{{media_url}}django-120x30.gif"
++   alt="Powered by Django" /></a>
+   <a target="_blank" href="http://code.google.com/appengine/"><img border="0"
+    src="{{media_url}}appengine-noborder-120x30.gif"
+    alt="Powered by Google App Engine" /></a>

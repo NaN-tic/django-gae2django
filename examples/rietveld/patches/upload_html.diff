@@ -1,0 +1,37 @@
+diff -r ee6a3546f960 templates/use_uploadpy.html
+--- a/templates/use_uploadpy.html	Fri Apr 26 19:15:43 2013 +0200
++++ b/templates/use_uploadpy.html	Sun Apr 28 22:49:40 2013 +0200
+@@ -2,23 +2,29 @@
+ 
+ {%block body%}
+ <h1>Tired of uploading files through the form?</h1>
++
++<p>You have two forms to upload the files:</p>
++
++<ul>
++<li>
++<p>Use <a href="https://bitbucket.org/nantic/hgreview" target="blank">hgreview</a> (It's a <a href="https://bitbucket.org/nicoe/hgreview">Nicoe</a>'s fork, with some modifications)
++</li>
++<li>
+ <p>Download <a href="{%url codereview.views.customized_upload_py%}">upload.py</a>, a simple tool for
+ uploading diffs from a version control system to the codereview app.</p>
+-
+ <p><strong>Usage summary:</strong>
+ <pre>upload.py [options] [-- diff_options]</pre></p>
+-
+ <p>Diff options are passed to the diff command of the underlying system.</p>
+-
+ <p><strong>Supported version control systems:</strong></p>
+ <ul>
+   <li>Subversion</li>
+   <li>Git</li>
+   <li>Mercurial</li>
+ </ul>
+-
+ <p><a href="http://code.google.com/p/rietveld/wiki/UploadPyUsage"
+       target="_blank">Read more</a> about this script.</p>
++</li>
++</ul>
+ 
+ <div style="margin-top: 1.5em;">
+ <form method="POST" action="{%url codereview.views.use_uploadpy%}">
