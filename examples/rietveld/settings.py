@@ -52,7 +52,7 @@ MEDIA_URL = '/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/djangostatic/'
+STATIC_URL = '/meida/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
