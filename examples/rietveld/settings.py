@@ -29,7 +29,7 @@ DATABASES = {
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Madrid'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -50,14 +50,13 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/static/'
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/meida/'
+# Absolute path to the directory that holds django static files.
+# Example: "/home/media/media.lawrence.com/"
+STATIC_ROOT = ''
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+# URL prefix for django static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'el@4s$*(idwm5-87teftxlksckmy8$tyo7(tm!n-5x)zeuheex'
@@ -74,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'gae2django.middleware.FixRequestUserMiddleware',
     # Keep in mind, that CSRF protection is DISABLED in this example!
     'rietveld_helper.middleware.DisableCSRFMiddleware',
@@ -99,7 +99,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'django.contrib.staticfiles',
     'gae2django',
     'rietveld_helper',
     'codereview',

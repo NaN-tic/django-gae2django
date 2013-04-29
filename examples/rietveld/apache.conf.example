@@ -5,7 +5,7 @@
     # Django gives out static resources only in development mode
     # Setting up static/ resource serving
     Alias /static /opt/rietveld/static
-    Alias /media /usr/lib/python2.7/dist-packages/django/contrib/admin/static
+    Alias /media /opt/rietveld/media
 
     WSGIDaemonProcess codereview threads=5 user=www-data umask=0026 home=/opt/rietveld display-name=wsgi:rietveld
     WSGIProcessGroup codereview
@@ -13,8 +13,8 @@
     WSGIScriptAlias / /opt/rietveld/codereview.wsgi
 
     # Logs
+    LogLevel notice
     ErrorLog /opt/rietveld/log/error.log
     CustomLog /opt/rietveld/log/access.log combined
-    LogLevel notice
 </VirtualHost>
 
