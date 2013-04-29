@@ -1,10 +1,12 @@
 default:
 	@echo "Run 'make all' to fetch required sources to run this example."
 
-all: templates static codereview feeds login views
+all: templates static codereview feeds login views repositories
 	@echo
 	@echo "Remember to copy the 'gae2django' directory from the main source where you have taken this rietveld directory to here."
 	@echo "Configure the database and other django things in the settings.py file."
+	@echo "You have to create a symlik from the django admin static directory to here. For e.g.:"
+	@echo "  ln -s /usr/lib/python2.7/dist-packages/django/contrib/admin/static/ media"
 	@echo "Run './manage.py syncdb' to config Rietveld."
 	@echo "Run './manage.py runserver' to run Rietveld."
 
@@ -53,3 +55,6 @@ login: codereview
 
 views: codereview
 	patch -p1 < patches/views.diff
+
+repositories: templates
+	patch -p1 < patches/repositories.diff
